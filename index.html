@@ -28,7 +28,7 @@ button,input{font:inherit}
 .distance{font-size:18px;color:#fff0be;margin-top:5px}
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .loot{background:var(--cream);color:var(--ink);border:3px solid #fff;box-shadow:4px 4px 0 #211b39;padding:14px 8px;min-height:130px;cursor:pointer;text-align:center;transition:transform .12s}
-.loot:hover{transform:translateY(-4px)}
+@media(hover:hover){.loot:hover{transform:translateY(-4px)}}
 .loot:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #211b39}
 .loot .emoji{font-size:38px;display:block;margin-bottom:10px}
 .loot b{font:9px 'Press Start 2P';line-height:1.8;display:block}
@@ -38,17 +38,19 @@ button,input{font:inherit}
 .footer span{color:var(--pink)}
 .modal{position:fixed;inset:0;background:#171426df;display:none;align-items:center;justify-content:center;padding:16px;z-index:999}
 .modal.open{display:flex}
-.panel{background:var(--cream);color:var(--ink);border:4px solid white;box-shadow:8px 8px 0 #9a78c2;width:min(650px,100%);max-height:90vh;overflow:auto;padding:22px;position:relative}
+.panel{background:var(--cream);color:var(--ink);border:4px solid white;box-shadow:8px 8px 0 #9a78c2;width:min(650px,100%);max-height:90vh;max-height:90dvh;overflow:auto;overscroll-behavior:contain;padding:22px;position:relative}
 .panel h2{font:13px 'Press Start 2P';line-height:1.9;color:#b34f87;margin:0 40px 18px 0}
-.close{position:absolute;right:12px;top:10px;border:2px solid var(--ink);background:#ffc7e1;padding:4px 10px;cursor:pointer;font-weight:bold}
+.close{position:absolute;right:10px;top:10px;min-width:44px;min-height:44px;border:2px solid var(--ink);background:#ffc7e1;padding:4px 10px;cursor:pointer;font-weight:bold}
+body:has(.modal.open){overflow:hidden}
+.route{white-space:nowrap}
 .panel p{font-size:25px;line-height:1.35}
 .panel label{display:inline-block;background:#f4c7df;padding:8px 12px;margin:6px 0;cursor:pointer;border:2px solid #d18aaf}
 .panel input[type=file]{display:none}
 .btn{border:3px solid var(--ink);background:var(--pink);color:var(--ink);padding:9px 13px;cursor:pointer;box-shadow:3px 3px 0 var(--ink);margin:6px 4px 6px 0}
 .btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
 .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0}
-.photo{border:3px dashed #c17ca7;min-height:150px;display:flex;align-items:center;justify-content:center;text-align:center;background:#ffe5f0;position:relative;overflow:hidden}
-.photo img{width:100%;height:100%;max-height:280px;object-fit:cover;position:absolute;inset:0}
+.photo{border:3px dashed #c17ca7;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;text-align:center;background:#ffe5f0;position:relative;overflow:hidden}
+.photo img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
 .photo span{padding:10px;z-index:1}
 .letter{background:#fff9eb;border:2px dashed #dca3b8;padding:18px;white-space:pre-line}
 .cakearea{text-align:center;background:#fce2ef;padding:18px}
@@ -60,7 +62,9 @@ button,input{font:inherit}
 .song-memory{font-size:20px;color:#8a4f78;margin-top:10px;font-style:italic}
 .toast{font:10px 'Press Start 2P';color:var(--mint);text-align:center;line-height:2;margin-top:16px}
 @keyframes float{50%{transform:translateY(-7px)}}
-@media(max-width:650px){.cards{grid-template-columns:repeat(2,1fr)}.game{padding:12px}.hud{font-size:8px}.scene{min-height:180px}.top h1{font-size:18px}.gallery{grid-template-columns:1fr}.loot{min-height:115px}}
+@media(max-width:650px){.cards{grid-template-columns:repeat(2,1fr)}.game{padding:12px}.hud{font-size:8px}.scene{min-height:180px}.top h1{font-size:18px}.gallery{grid-template-columns:1fr}.loot{min-height:115px}
+  body{font-size:20px}.subtitle{font-size:23px}.panel{padding:16px}.panel p{font-size:21px}.panel h2{margin-right:54px}
+  .scene{padding:56px 12px 20px}.moon{width:28px;height:28px;top:14px}.cloud{top:14px;font-size:26px}.cake{font-size:60px}}
 </style>
 </head>
 <body>
@@ -78,7 +82,7 @@ button,input{font:inherit}
     <div class="scene-copy">
       <div class="pixelheart">💗</div>
       <strong>LONG DISTANCE, SAME TEAM</strong>
-      <span>Montreal ◀────────────▶ Taiwan</span>
+      <span class="route">Montreal ◀──────▶ Taiwan</span>
       <div class="distance">Different time zones. One little universe.</div>
     </div>
   </div>
@@ -101,10 +105,10 @@ button,input{font:inherit}
     <p>Our little collection of favourite moments.</p>
     <label>＋ Add more photos<input type="file" accept="image/*" multiple onchange="loadPhotos(event)"></label>
     <div class="gallery" id="gallery">
-      <div class="photo"><img src="6FC4CACE-FB1F-4E53-B8C6-39DB066BCEC7.JPG" alt="Memory 01"></div>
-      <div class="photo"><img src="11151821-ECDA-4F62-9F98-E1D3B951C462.JPG" alt="Memory 02"></div>
-      <div class="photo"><img src="9392679C-5643-4CAA-A47E-EDC5151785F3.JPG" alt="Memory 03"></div>
-      <div class="photo"><img src="DCF0EC6B-8393-4F42-9D21-2BF64033613A.JPG" alt="Memory 04"></div>
+      <div class="photo"><img src="photos/IMG_0937.jpg" alt="Memory 01" loading="lazy" decoding="async"></div>
+      <div class="photo"><img src="photos/IMG_2760.jpg" alt="Memory 02" loading="lazy" decoding="async"></div>
+      <div class="photo"><img src="photos/IMG_4167.jpg" alt="Memory 03" loading="lazy" decoding="async"></div>
+      <div class="photo"><img src="photos/IMG_6878.jpg" alt="Memory 04" loading="lazy" decoding="async"></div>
     </div>
   </section>
 </div>
