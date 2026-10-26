@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Player 1's Birthday 💗</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+:root{--ink:#302443;--pink:#ff9fca;--rose:#ff6fae;--cream:#fff2d8;--lav:#c7b8ff;--mint:#b8f3df;--night:#282344}
+*{box-sizing:border-box} 
+body{margin:0;background:#282344;color:var(--cream);font-family:'VT323',monospace;font-size:22px;min-height:100vh;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;background-image:radial-gradient(#fff 1px,transparent 1px);background-size:25px 25px}
+button,input{font:inherit}
+.wrap{width:min(1000px,94vw);margin:auto;padding:28px 0 45px}
+.top{text-align:center;margin:10px auto 25px}
+.eyebrow{font:10px 'Press Start 2P';color:var(--mint);letter-spacing:1px;line-height:2}
+.top h1{font:clamp(19px,4vw,34px) 'Press Start 2P';line-height:1.7;color:var(--pink);text-shadow:4px 4px #754b8d;margin:16px 0}
+.subtitle{color:#e6d9ff;font-size:27px}
+.game{border:4px solid #fce9ff;box-shadow:0 0 0 4px #8d75b8,8px 8px 0 #151329;background:#45375f;padding:20px;position:relative}
+.hud{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font:10px 'Press Start 2P';color:var(--mint);padding-bottom:15px;border-bottom:2px dashed #8e7aa9}
+.scene{min-height:210px;margin:20px 0;background:linear-gradient(#6d5c99 0 68%,#5e8d83 68%);border:3px solid #cdbbff;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px}
+.moon{position:absolute;right:12%;top:18px;width:38px;height:38px;background:#fff2bd;box-shadow:0 0 0 8px #fff2bd22}
+.cloud{position:absolute;left:13%;top:32px;color:#e6d9ff;font-size:32px;letter-spacing:8px}
+.pixelheart{font-size:54px;filter:drop-shadow(4px 4px #74466f);animation:float 2s steps(4) infinite}
+.scene-copy{position:relative;z-index:1;text-shadow:2px 2px #302443}
+.scene-copy strong{display:block;font:12px 'Press Start 2P';line-height:2.1;color:#fff0be}
+.scene-copy span{display:block;margin-top:7px}
+.distance{font-size:18px;color:#fff0be;margin-top:5px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.loot{background:var(--cream);color:var(--ink);border:3px solid #fff;box-shadow:4px 4px 0 #211b39;padding:14px 8px;min-height:130px;cursor:pointer;text-align:center;transition:transform .12s}
+.loot:hover{transform:translateY(-4px)}
+.loot:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #211b39}
+.loot .emoji{font-size:38px;display:block;margin-bottom:10px}
+.loot b{font:9px 'Press Start 2P';line-height:1.8;display:block}
+.loot small{display:block;font-size:18px;margin-top:5px}
+.hint{text-align:center;color:#e5d7ff;font-size:21px;margin:20px 0 0}
+.footer{text-align:center;color:#b9abc9;font-size:18px;margin-top:24px}
+.footer span{color:var(--pink)}
+.modal{position:fixed;inset:0;background:#171426df;display:none;align-items:center;justify-content:center;padding:16px;z-index:999}
+.modal.open{display:flex}
+.panel{background:var(--cream);color:var(--ink);border:4px solid white;box-shadow:8px 8px 0 #9a78c2;width:min(650px,100%);max-height:90vh;overflow:auto;padding:22px;position:relative}
+.panel h2{font:13px 'Press Start 2P';line-height:1.9;color:#b34f87;margin:0 40px 18px 0}
+.close{position:absolute;right:12px;top:10px;border:2px solid var(--ink);background:#ffc7e1;padding:4px 10px;cursor:pointer;font-weight:bold}
+.panel p{font-size:25px;line-height:1.35}
+.panel label{display:inline-block;background:#f4c7df;padding:8px 12px;margin:6px 0;cursor:pointer;border:2px solid #d18aaf}
+.panel input[type=file]{display:none}
+.btn{border:3px solid var(--ink);background:var(--pink);color:var(--ink);padding:9px 13px;cursor:pointer;box-shadow:3px 3px 0 var(--ink);margin:6px 4px 6px 0}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0}
+.photo{border:3px dashed #c17ca7;min-height:150px;display:flex;align-items:center;justify-content:center;text-align:center;background:#ffe5f0;position:relative;overflow:hidden}
+.photo img{width:100%;height:100%;max-height:280px;object-fit:cover;position:absolute;inset:0}
+.photo span{padding:10px;z-index:1}
+.letter{background:#fff9eb;border:2px dashed #dca3b8;padding:18px;white-space:pre-line}
+.cakearea{text-align:center;background:#fce2ef;padding:18px}
+.cake{font-size:72px;line-height:1.5;image-rendering:pixelated}
+.flames{font-size:25px;letter-spacing:5px;min-height:30px}
+.songbox{background:#f4d7ed;padding:16px;border:2px dashed #bc7fa5}
+.songbox input{width:100%;padding:8px;border:2px solid #b67b9e;background:#fff9eb;margin:6px 0 10px;color:var(--ink)}
+.note{font-size:18px!important;color:#6d5874}
+.song-memory{font-size:20px;color:#8a4f78;margin-top:10px;font-style:italic}
+.toast{font:10px 'Press Start 2P';color:var(--mint);text-align:center;line-height:2;margin-top:16px}
+@keyframes float{50%{transform:translateY(-7px)}}
+@media(max-width:650px){.cards{grid-template-columns:repeat(2,1fr)}.game{padding:12px}.hud{font-size:8px}.scene{min-height:180px}.top h1{font-size:18px}.gallery{grid-template-columns:1fr}.loot{min-height:115px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header class="top">
+  <div class="eyebrow">♡ PLAYER 1 HAS ENTERED A NEW LEVEL ♡</div>
+  <h1>HAPPY BIRTHDAY!</h1>
+  <div class="subtitle">To my favourite human, my Player 1 ♡</div>
+</header>
+<section class="game">
+  <div class="hud"><span>♥ HP: INFINITE LOVE</span><span>WORLD 01: US</span><span>COINS: ∞</span></div>
+  <div class="scene">
+    <div class="moon"></div>
+    <div class="cloud">☁</div>
+    <div class="scene-copy">
+      <div class="pixelheart">💗</div>
+      <strong>LONG DISTANCE, SAME TEAM</strong>
+      <span>Montreal ◀────────────▶ Taiwan</span>
+      <div class="distance">Different time zones. One little universe.</div>
+    </div>
+  </div>
+  <div class="cards">
+    <button class="loot" type="button" onclick="openModal('album')"><span class="emoji">📸</span><b>MEMORY BOX</b><small>Open our album</small></button>
+    <button class="loot" type="button" onclick="openModal('letter')"><span class="emoji">💌</span><b>SECRET LETTER</b><small>Read your message</small></button>
+    <button class="loot" type="button" onclick="openModal('song')"><span class="emoji">🎵</span><b>OUR SONG</b><small>Press play</small></button>
+    <button class="loot" type="button" onclick="openModal('cake')"><span class="emoji">🎂</span><b>BIRTHDAY QUEST</b><small>Blow the candles</small></button>
+  </div>
+  <div class="hint">✦ Choose a gift box to unlock it ✦</div>
+  <div class="toast" id="progress">QUEST LOG: 0 / 4 GIFTS OPENED</div>
+</section>
+<div class="footer">Made with <span>♥</span> across the ocean (and an unreasonable amount of missing you).</div>
+</main>
+
+<div class="modal" id="album">
+  <section class="panel">
+    <button class="close" type="button" onclick="closeModal('album')">X</button>
+    <h2>📸 MEMORY BOX</h2>
+    <p>Our little collection of favourite moments.</p>
+    <label>＋ Add more photos<input type="file" accept="image/*" multiple onchange="loadPhotos(event)"></label>
+    <div class="gallery" id="gallery">
+      <div class="photo"><img src="6FC4CACE-FB1F-4E53-B8C6-39DB066BCEC7.JPG" alt="Memory 01"></div>
+      <div class="photo"><img src="11151821-ECDA-4F62-9F98-E1D3B951C462.JPG" alt="Memory 02"></div>
+      <div class="photo"><img src="9392679C-5643-4CAA-A47E-EDC5151785F3.JPG" alt="Memory 03"></div>
+      <div class="photo"><img src="DCF0EC6B-8393-4F42-9D21-2BF64033613A.JPG" alt="Memory 04"></div>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="letter">
+  <section class="panel">
+    <button class="close" type="button" onclick="closeModal('letter')">X</button>
+    <h2>💌 A LETTER FOR YOU</h2>
+    <div class="letter" id="letterText">Happy birthday ma babibubu!!! Em mong ở tuổi mới này anh sẽ càng thêm trẻ và đẹp troaiiii, càng thêm khỏe mạnh, nhiều niềm vui và nhiều may mắn 🥳. Mong rằng mọi cố gắng của anh luôn được đền đáp, những ước mơ anh theo đuổi dần thành hiện thật, và dù cho có bao khó khăn anh vẫn luôn đủ mạnh mẽ để vượt qua . 
+
+Cảm ơn anh đã xuất hiện trong cuộc đời em, anh không biết được em biết ơn thế nào khi được anh dìu dắt và giúp em thay đổi tốt hơn như thế nào đâuuuu (mặc dù em vẫn đôi lúc khó chịu vì thái độ của anh -.-). Em không biết được tương lai sẽ như thế nào nhưng em hy vọng có thể đón thật nhiều sinh nhật cùng anh, được nhìn anh trưởng thành hơn theo mỗi năm, được chứng kiến anh đạt được những điều mà anh mong muốn, và cùng nhau đồng hành cũng như tạo nên thật nhiều kỷ niệm đẹp và nhí nhố cùng nhau 🤡💃🏻🕺🏻. 
+
+Sinh nhật năm nay em không thể ở cạnh cùng anh trải qua, nhưng em hy vọng anh vẫn cảm nhận được tình yêu của em dù cách anh một khoảng trời. Em mong món quà nhỏ bé này có thể khiến anh cười và nhớ rằng mãi luôn có người thương và cổ vũ cho anh hết mình.
+
+Chúc anh bạn trai bé bỏng của em một tuổi mới thật hạnh phúc. Mong anh luôn khoẻ mạnh, tự tin vào bản thân và không bao giờ quên rằng anh xứng đáng với những điều tốt đẹp nhất 🥰.</div>
+  </section>
+</div>
+
+<div class="modal" id="song">
+  <section class="panel">
+    <button class="close" type="button" onclick="closeModal('song')">X</button>
+    <h2>🎵 THE SONG THAT IS YOU</h2>
+    <p>Some songs are basically a person in audio form.</p>
+    <div class="songbox">
+      <label for="songUrl">Our Special Song Link</label>
+      <input id="songUrl" type="url" value="https://www.youtube.com/watch?v=xPXgebIDE6M">
+      <button class="btn" type="button" onclick="saveSong()">Save song link</button>
+      <button class="btn" type="button" onclick="playSong()">Open our song ↗</button>
+      <p class="song-memory">✨ This song brings back memories of the early days when we were flirting.</p>
+      <p class="note" id="songStatus">Your song link is loaded and ready!</p>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="cake">
+  <section class="panel">
+    <button class="close" type="button" onclick="closeModal('cake')">X</button>
+    <h2>🎂 BIRTHDAY QUEST</h2>
+    <p>Make a wish, then blow out every candle. Yes, all of them. Birthday physics are generous.</p>
+    <div class="cakearea">
+      <div class="flames" id="flames">🔥 🔥 🔥</div>
+      <div class="cake" id="cakeArt">🎂</div>
+      <button class="btn" type="button" id="blowBtn" onclick="blowCandles()">💨 Blow out candles!</button>
+      <p id="wishText">Your wish is between you and the universe. (And possibly the cake.)</p>
+    </div>
+  </section>
+</div>
+
+<script>
+const opened = new Set();
+let savedSong = 'https://www.youtube.com/watch?v=xPXgebIDE6M';
+
+function openModal(id) {
+  const modal = document.getElementById(id);
+  if (modal) {
+    modal.classList.add('open');
+    opened.add(id);
+    document.getElementById('progress').textContent = `QUEST LOG: ${opened.size} / 4 GIFTS OPENED`;
+    if (id === 'song' && savedSong) {
+      document.getElementById('songUrl').value = savedSong;
+    }
+  }
+}
+
+function closeModal(id) {
+  const modal = document.getElementById(id);
+  if (modal) {
+    modal.classList.remove('open');
+  }
+}
+
+document.querySelectorAll('.modal').forEach(m => {
+  m.addEventListener('click', e => {
+    if (e.target === m) m.classList.remove('open');
+  });
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal').forEach(m => {
+      m.classList.remove('open');
+    });
+  }
+});
+
+function loadPhotos(event) {
+  const files = [...event.target.files].slice(0, 8);
+  const gallery = document.getElementById('gallery');
+  if (files.length > 0) {
+    gallery.innerHTML = '';
+    files.forEach((file, i) => {
+      const frame = document.createElement('div');
+      frame.className = 'photo';
+      const img = document.createElement('img');
+      img.src = URL.createObjectURL(file);
+      img.alt = 'Memory ' + (i + 1);
+      frame.appendChild(img);
+      gallery.appendChild(frame);
+    });
+  }
+}
+
+function saveSong() {
+  const value = document.getElementById('songUrl').value.trim();
+  if (!value) {
+    document.getElementById('songStatus').textContent = 'Paste a link first.';
+    return;
+  }
+  try {
+    const u = new URL(value);
+    savedSong = u.href;
+    document.getElementById('songStatus').textContent = 'Song link saved for this visit.';
+  } catch (e) {
+    document.getElementById('songStatus').textContent = 'Invalid link format.';
+  }
+}
+
+function playSong() {
+  if (!savedSong) saveSong();
+  if (savedSong) window.open(savedSong, '_blank', 'noopener,noreferrer');
+}
+
+function blowCandles() {
+  document.getElementById('flames').textContent = '';
+  document.getElementById('cakeArt').textContent = '🍰';
+  document.getElementById('blowBtn').textContent = '✨ Wish sent!';
+  document.getElementById('wishText').textContent = 'Candles blown. Wish launched across the ocean. Happy birthday, my love! ♡';
+  document.getElementById('blowBtn').disabled = true;
+}
+</script>
+</body>
+</html>
